@@ -1,0 +1,42 @@
+---
+fullname: Coq JSON
+shortname: coq-json
+opam_name: coq-json
+organization: liyishuai
+circleci: true
+ci_extra_dev: true
+ci_test_dependants: true
+synopsis: JSON in Coq
+description: From JSON to Coq, and vice versa.
+authors:
+  - name: Yishuai Li
+    email: yishuai@cis.upenn.edu
+license:
+  - fullname: BSD 3-Clause "New" or "Revised" License
+    identifier: BSD-3-Clause
+dependencies:
+  - description: '[Parsec](https://github.com/liyishuai/coq-parsec)'
+    opam:
+      name: coq-parsec
+      version: '{ >= "0.1.0" }'
+  - description: '[Menhir](http://gallium.inria.fr/~fpottier/menhir/)'
+    opam:
+      name: menhir
+      version: '{ >= "20210310" }'
+  - description: '[MenhirLib](https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)'
+    opam:
+      name: coq-menhirlib
+      version: '{ >= "20210310" }'
+categories:
+  - name: Computer Science/Data Types and Data Structures
+keywords:
+  - name: string
+namespace: JSON
+opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
+supported_coq_versions:
+  text: 8.12 or later
+  opam: '{ >= "8.12~" }'
+tested_coq_opam_versions:
+  - version: 'dev'
+  - version: '8.12'
+  - version: '8.13'
