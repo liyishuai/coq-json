@@ -30,7 +30,8 @@ dependencies:
 categories:
   - name: Computer Science/Data Types and Data Structures
 keywords:
-  - name: string
+  - name: serialization
+  - name: JSON
 namespace: JSON
 opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
 supported_coq_versions:
