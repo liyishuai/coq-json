@@ -1,4 +1,6 @@
 From ExtLib Require Export
+     List
+     Traversable
      Monad
      OptionMonad.
 From Coq Require Export
@@ -46,3 +48,8 @@ Definition get_bool (k : string) (j : json) : option bool :=
   | JSON__False => Some false
   | _         => None
   end.
+
+Definition get_list {T} (f : json -> option T) (j : json) : option (list T) :=
+  if j is JSON__Array l
+  then sequence (map f l)
+  else None.
