@@ -59,8 +59,10 @@ Definition lexer (str : string) : option string + buffer :=
   | inr (l, _) => inr (app_buf l TheEnd)
   end.
 
-Definition from_string (str : string) : parse_result json :=
+Definition from_string (str : string) : option string + json :=
   match lexer str with
-  | inl _ => Fail_pr
-  | inr b => parse_json bigNumber b
+  | inl err => inl err
+  | inr b => if parse_json bigNumber b is Parsed_pr j _
+            then inr j
+            else inl (Some "Passed lexer but failed JSON parser")
   end.
