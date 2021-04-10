@@ -5,12 +5,14 @@ From ExtLib Require Export
      OptionMonad.
 From Coq Require Export
      Basics
-     List
+     Bool
      String
+     List
      ZArith.
 Export
   MonadNotation
   IfNotations.
+Open Scope lazy_bool_scope.
 Open Scope monad_scope.
 Open Scope program_scope.
 
@@ -53,3 +55,27 @@ Definition get_list {T} (f : json -> option T) (j : json) : option (list T) :=
   if j is JSON__Array l
   then sequence (map f l)
   else None.
+
+Definition eqb_list {A} (f : A -> A -> bool) : list A -> list A -> bool :=
+  fix eqb_list_ (xs ys : list A) : bool :=
+    match xs, ys with
+    | nil, nil => true
+    | x :: xs, y :: ys => f x y &&& eqb_list_ xs ys
+    | _, _ => false
+    end.
+
+Fixpoint eqb_json (j k : json) : bool :=
+  match j, k with
+  | JSON__Object lj, JSON__Object lk =>
+    eqb_list (fun (jm km : string * json) =>
+                let (js, jj) := jm in
+                let (ks, kj) := km in
+                (js =? ks) &&& eqb_json jj kj) lj lk
+  | JSON__Array lj, JSON__Array lk => eqb_list eqb_json lj lk
+  | JSON__String s, JSON__String t => s =? t
+  | JSON__Number z, JSON__Number y => (z =? y)%Z
+  | JSON__True    , JSON__True
+  | JSON__False   , JSON__False
+  | JSON__Null    , JSON__Null => true
+  | _, _ => false
+  end%string.

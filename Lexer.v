@@ -16,7 +16,8 @@ Definition lex__NUMBER : parser token :=
 Definition lex__NAME : parser token :=
   let ischar (a : ascii) : bool :=
       (Space <=? a) &&& negb ((a =? DoubleQuote) ||| (a =? "\")) in
-  NAME ∘ string_of_list_ascii <$> many1
+  firstExpect DoubleQuote $
+    name <- string_of_list_ascii <$> many
        (chooseFrom
           [satisfy ischar;
            firstExpect "\" $ chooseFrom
@@ -27,7 +28,8 @@ Definition lex__NAME : parser token :=
                         firstExpect "b" $ ret "008";
                         firstExpect "t" $ ret "009";
                         firstExpect "f" $ ret "012";
-                        firstExpect "r" $ ret "013"]]).
+                        firstExpect "r" $ ret "013"]]);;
+  firstExpect DoubleQuote (ret (NAME name)).
 
 Close Scope char_scope.
 
