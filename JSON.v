@@ -1,4 +1,5 @@
 From ExtLib Require Export
+     Functor
      List
      Traversable
      Monad
@@ -13,6 +14,7 @@ From Coq Require Export
      List
      ZArith.
 Export
+  FunctorNotation
   MonadNotation
   IfNotations.
 Open Scope lazy_bool_scope.
@@ -28,12 +30,13 @@ Inductive json :=
 | JSON__False
 | JSON__Null.
 
-Definition get_json (k : string) (j : json) : json :=
+Definition get_json' (k : string) (j : json) : option json :=
   if j is JSON__Object l
-  then if find (eqb k ∘ fst) l is Some (_, v)
-       then v
-       else JSON__Null
-  else JSON__Null.
+  then snd <$> find (eqb k ∘ fst) l
+  else None.
+
+Definition get_json (k : string) (j : json) : json :=
+  if get_json' k j is Some j then j else JSON__Null.
 
 Definition get_Z (k : string) (j : json) : option Z :=
   if get_json k j is JSON__Number z then Some z else None.
