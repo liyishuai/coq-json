@@ -62,6 +62,11 @@ Definition get_list {T} (f : json -> option T) (j : json) : option (list T) :=
   then sequence (map f l)
   else None.
 
+Definition get_nth (n : nat) (j : json) : option json :=
+  if j is JSON__Array l
+  then nth_error l n
+  else None.
+
 Module MemberOrder <: TotalLeBool.
 Definition t : Set := string * json.
 
