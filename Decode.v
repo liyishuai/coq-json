@@ -1,5 +1,6 @@
 From ExtLib Require Export
      Extras
+     MonadExc
      EitherMonad.
 From JSON Require Export
      Jpath
@@ -40,6 +41,10 @@ Instance JDecode__list T `{JDecode T} : JDecode (list T) :=
   fun j : json =>
     if j is JSON__Array l then sequence $ map decode l
     else inl $ "Not an Array: " ++ to_string j.
+
+Instance JDecode__option T `{JDecode T} : JDecode (option T) :=
+  fun j : json =>
+    catch (Some <$> decode j) (const $ inr None).
 
 Instance JDecode__unit : JDecode unit :=
   fun j : json =>

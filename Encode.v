@@ -14,3 +14,6 @@ Instance JEncode__bool   : JEncode bool :=
 
 Instance JEncode__list T `{JEncode T} : JEncode (list T) :=
   JSON__Array ∘ map encode.
+
+Instance JEncode__option T `{JEncode T} : JEncode (option T) :=
+  fun x => if x is Some x then encode x else JSON__Null.
