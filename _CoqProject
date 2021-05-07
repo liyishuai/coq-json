@@ -4,3 +4,6 @@ Parser.v
 Lexer.v
 Printer.v
 Instances.v
+Jpath.v
+Decode.v
+Encode.v
