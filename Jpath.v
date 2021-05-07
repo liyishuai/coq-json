@@ -25,3 +25,11 @@ Instance Serialize__jpath : Serialize jpath :=
       | Jpath__Object s p => Atom s   ::jpath_to_list p
       end in
   List ∘ jpath_to_list.
+
+Module JpathNotations.
+
+Notation "'this'" := Jpath__This   : json_scope.
+Infix "^"         := Jpath__Array  : json_scope.
+Infix "->"         := Jpath__Object : json_scope.
+
+End JpathNotations.
