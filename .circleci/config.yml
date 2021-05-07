@@ -33,6 +33,7 @@ jobs:
     - run:
         name: Build, test, and install package
         command: opam install -t .
+
     - run:
         name: Test dependants
         command: |
@@ -49,9 +50,6 @@ workflows:
   version: 2
   test:
     jobs:
-    - build:
-        name: "Coq dev-ocaml-4.11-flambda"
-        coq: "coqorg/coq:dev-ocaml-4.11-flambda"
     - build:
         name: "Coq 8.12-ocaml-4.11-flambda"
         coq: "coqorg/coq:8.12-ocaml-4.11-flambda"
