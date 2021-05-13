@@ -1,5 +1,10 @@
+From ExtLib Require Export
+     Extras.
 From JSON Require Export
      JSON.
+Export
+  FunNotation
+  ListNotations.
 
 Class JEncode T := encode : T -> json.
 
@@ -17,3 +22,11 @@ Instance JEncode__list T `{JEncode T} : JEncode (list T) :=
 
 Instance JEncode__option T `{JEncode T} : JEncode (option T) :=
   fun x => if x is Some x then encode x else JSON__Null.
+
+Definition jkv (k : string) (v : json) : json :=
+  JSON__Object [(k, v)].
+
+Definition jobj' {T} (encode : T -> json) (k : string) (v : T) : json :=
+  jkv k $ encode v.
+
+Definition jobj {T} `{JEncode T} : string -> JEncode T := jobj' encode.
