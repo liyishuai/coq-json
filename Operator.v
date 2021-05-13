@@ -2,7 +2,7 @@ From JSON Require Export
      Instances.
 Open Scope string_scope.
 
-Definition or_json (j k : json) : string + json :=
+Definition or_json' (j k : json) : string + json :=
   match j, k with
   | JSON__Object lj, JSON__Object lk => inr $ JSON__Object $ app lj lk
   | JSON__Object _, x
@@ -10,6 +10,9 @@ Definition or_json (j k : json) : string + json :=
   | _, _ => inl $ "Neither is an Object: " ++ to_string j ++
                " or: " ++ to_string k
   end.
+
+Definition or_json (j k : json) : json :=
+  if or_json' j k is inr x then x else j.
 
 Module MemberOrder <: TotalLeBool.
 Definition t : Set := string * json.
