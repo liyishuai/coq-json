@@ -37,12 +37,12 @@ Instance JDecode__bool : JDecode bool :=
     | _         => inl $ "Not a Boolean: " ++ to_string j
     end.
 
-Instance JDecode__list T `{JDecode T} : JDecode (list T) :=
+Definition decode__list {T} `{JDecode T} : JDecode (list T) :=
   fun j : json =>
     if j is JSON__Array l then sequence $ map decode l
     else inl $ "Not an Array: " ++ to_string j.
 
-Instance JDecode__option T `{JDecode T} : JDecode (option T) :=
+Definition decode__option {T} `{JDecode T} : JDecode (option T) :=
   fun j : json =>
     catch (Some <$> decode j) (const $ inr None).
 
