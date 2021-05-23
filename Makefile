@@ -9,9 +9,12 @@ endif
 $(COQMAKEFILE): _CoqProject
 	$(COQBIN)coq_makefile -f $^ -o $@
 
-.PHONY: clean
+.PHONY: clean test
 clean::
 	@ rm -f `cat .gitignore`
 
 Parser.v: Parser.vy
 	$(MENHIR) $(MENHIRFLAGS) $<
+
+test:
+	$(MAKE) -C test

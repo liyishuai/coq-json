@@ -1,3 +1,7 @@
+From Coq Require Export
+     ssr.ssrfun.
+From Parsec Require Export
+     Parser.
 From ExtLib Require Export
      Extras
      MonadExc
@@ -6,8 +10,11 @@ From JSON Require Export
      Jpath
      Printer.
 Export
+  JpathNotations
   FunNotation.
 Open Scope string_scope.
+Open Scope parser_scope.
+Open Scope json_scope.
 
 Class JDecode T := decode : json -> string + T.
 
@@ -55,3 +62,14 @@ Definition decode__jpath (p : jpath) : JDecode json :=
   fun j : json =>
     if jget p j is Some j' then inr j'
     else inl $ CeresSerialize.to_string p ++ " not found in: " ++ to_string j.
+
+Definition dparse {T} (pr : parser T) (s : string) : string + T :=
+  match parse pr s with
+  | inl os     => inl (odflt "Parser out of fuel" os)
+  | inr (t, _) => inr t
+  end.
+
+Definition dpath' {T} (d : JDecode T) (s : string) (j : json) : string + T :=
+  (decode__jpath (s -> this) j <|> inr JSON__Null) >>= d.
+
+Definition dpath {T} `{JDecode T} : string -> JDecode T := dpath' decode.
