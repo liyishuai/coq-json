@@ -12,7 +12,7 @@ Fixpoint to_string (j : json) : string :=
   | JSON__Object l =>
     let member_to_string (nv : string * json) :=
         let (n, v) := nv in
-        n ++ String ":" (to_string v) in
+        String DoubleQuote n ++ String DoubleQuote (String ":" (to_string v)) in
     String "{" ((concat "," (map member_to_string l)) ++ "}")
   | JSON__Array l =>
     String "[" ((concat "," (map to_string l)) ++ "]")
