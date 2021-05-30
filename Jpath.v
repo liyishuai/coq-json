@@ -7,29 +7,29 @@ Export
 
 Inductive jpath :=
   Jpath__This
-| Jpath__Array  : nat -> jpath -> jpath
-| Jpath__Object : string -> jpath -> jpath.
+| Jpath__Array  : jpath -> nat -> jpath
+| Jpath__Object : jpath -> string -> jpath.
 
 Fixpoint jget (p : jpath) (j : json) : option json :=
   match p with
   | Jpath__This        => Some j
-  | Jpath__Array n p'  => get_nth   n j >>= jget p'
-  | Jpath__Object s p' => get_json' s j >>= jget p'
+  | Jpath__Array p' n  => jget p' j >>= get_nth n
+  | Jpath__Object p' s => jget p' j >>= get_json' s
   end.
 
 Instance Serialize__jpath : Serialize jpath :=
   let fix jpath_to_list (p : jpath) : list sexp :=
       match p with
       | Jpath__This       => []
-      | Jpath__Array  n p => to_sexp n::jpath_to_list p
-      | Jpath__Object s p => Atom s   ::jpath_to_list p
+      | Jpath__Array  p n => jpath_to_list p ++ [to_sexp n]
+      | Jpath__Object p s => jpath_to_list p ++ [Atom s]
       end in
   List ∘ jpath_to_list.
 
 Module JpathNotations.
 
 Notation "'this'" := Jpath__This   : json_scope.
-Infix "^"         := Jpath__Array  : json_scope.
-Infix "->"         := Jpath__Object : json_scope.
+Infix "#" := Jpath__Array  (at level 50) : json_scope.
+Infix "@" := Jpath__Object (at level 50) : json_scope.
 
 End JpathNotations.
