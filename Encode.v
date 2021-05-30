@@ -21,7 +21,7 @@ Instance JEncode__list {T} `{JEncode T} : JEncode (list T) :=
   JSON__Array ∘ map encode.
 
 Instance JEncode__option {T} `{JEncode T} : JEncode (option T) :=
-  fun x => if x is Some x then encode x else JSON__Null.
+  fun x => if x is Some x then encode x else JSON__Object [].
 
 Definition jkv (k : string) (v : json) : json :=
   JSON__Object [(k, v)].
