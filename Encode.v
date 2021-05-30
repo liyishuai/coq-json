@@ -23,8 +23,11 @@ Instance JEncode__list {T} `{JEncode T} : JEncode (list T) :=
 Instance JEncode__option {T} `{JEncode T} : JEncode (option T) :=
   fun x => if x is Some x then encode x else JSON__Object [].
 
-Definition jkv (k : string) (v : json) : json :=
+Definition jkv' (k : string) (v : json) : json :=
   JSON__Object [(k, v)].
+
+Definition jkv (k : string) (v : json) : json :=
+  if v is JSON__Object [] then JSON__Object [] else jkv' k v.
 
 Definition jobj' {T} (encode : T -> json) (k : string) (v : T) : json :=
   jkv k $ encode v.
