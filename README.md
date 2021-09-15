@@ -33,7 +33,7 @@ The easiest way to install the latest released version of Coq JSON
 is via [OPAM](https://opam.ocaml.org/doc/Install.html):
 
 ```shell
-opam repo add coq-released https://coq.inria.fr/opam/released
+opam repo add coq-extra-dev https://coq.inria.fr/opam/extra-dev
 opam install coq-json
 ```
 
@@ -42,7 +42,7 @@ To instead build and install manually, do:
 ``` shell
 git clone https://github.com/liyishuai/coq-json.git
 cd coq-json
-make   # or make -j <number-of-cores-on-your-machine> 
+make   # or make -j <number-of-cores-on-your-machine>
 make install
 ```
 
