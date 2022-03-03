@@ -18,3 +18,7 @@ Parser.v: Parser.vy
 
 test:
 	$(MAKE) -C test
+
+publish%:
+	opam publish --packages-directory=released/packages \
+		--repo=coq/opam-coq-archive --tag=v$* -v $* liyishuai/coq-json

@@ -17,39 +17,21 @@ dependencies:
   - description: '[Parsec](https://github.com/liyishuai/coq-parsec)'
     opam:
       name: coq-parsec
-      version: '{ >= "0.1.0" }'
+      version: '{ >= "0.1.1" }'
   - description: '[Menhir](http://gallium.inria.fr/~fpottier/menhir/)'
     opam:
       name: menhir
-      version: '{ >= "20210310" }'
+      version: '{ >= "20220210" }'
   - description: '[MenhirLib](https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)'
     opam:
       name: coq-menhirlib
-      version: '{ >= "20210310" }'
+      version: '{ >= "20220210" }'
 categories:
   - name: Computer Science/Data Types and Data Structures
 keywords:
   - name: serialization
   - name: JSON
-build: |
-  ## Building and installation instructions
-
-  The easiest way to install the latest released version of Coq JSON
-  is via [OPAM](https://opam.ocaml.org/doc/Install.html):
-
-  ```shell
-  opam repo add coq-extra-dev https://coq.inria.fr/opam/extra-dev
-  opam install coq-json
-  ```
-
-  To instead build and install manually, do:
-
-  ``` shell
-  git clone https://github.com/liyishuai/coq-json.git
-  cd coq-json
-  make   # or make -j <number-of-cores-on-your-machine> 
-  make install
-  ```
+date: 2022-03-03
 namespace: JSON
 opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
 supported_coq_versions:
