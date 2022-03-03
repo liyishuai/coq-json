@@ -14,7 +14,7 @@ synopsis: "JSON in Coq"
 description: """
 From JSON to Coq, and vice versa."""
 
-build: [make "-j%{jobs}%" ]
+build: [make "-j%{jobs}%"]
 run-test: [make "-j%{jobs}%" "test"]
 install: [make "install"]
 depends: [

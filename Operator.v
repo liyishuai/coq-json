@@ -6,7 +6,7 @@ Definition or_json' (j k : json) : string + json :=
   match j, k with
   | JSON__Object lj, JSON__Object lk => inr $ JSON__Object $ app lj lk
   | JSON__Object _, x
-  | x, JSON__Object _ => inl $ "Not an Object: " ++ to_string k
+  | x, JSON__Object _ => inl $ "Not an Object: " ++ to_string x
   | _, _ => inl $ "Neither is an Object: " ++ to_string j ++
                " or: " ++ to_string k
   end.
@@ -110,6 +110,8 @@ Fixpoint eqb_json' (j k : json) : bool :=
 
 Definition eqb_json (j k : json) : bool :=
   eqb_json' (sort_json j) (sort_json k).
+
+Declare Scope json_scope.
 
 Module JNotations.
 

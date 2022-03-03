@@ -1,4 +1,5 @@
 -Q . JSON
+-arg -w -arg -notation-overridden
 JSON.v
 Parser.v
 Lexer.v

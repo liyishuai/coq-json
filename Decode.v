@@ -18,24 +18,30 @@ Open Scope json_scope.
 
 Class JDecode T := decode : json -> string + T.
 
+#[global]
 Instance JDecode__json : JDecode json := inr.
 
+#[global]
 Instance JDecode__string : JDecode string :=
   fun j : json =>
     if j is JSON__String str then inr str
     else inl $ "Not a String: " ++ to_string j.
 
+#[global]
 Instance JDecode__Z : JDecode Z :=
   fun j : json =>
     if j is JSON__Number z then inr z
     else inl $ "Not a Number: " ++ to_string j.
 
+#[global]
 Instance JDecode__N : JDecode N :=
   fmap Z.to_N ∘ decode.
 
+#[global]
 Instance JDecode__nat : JDecode nat :=
   fmap Z.to_nat ∘ decode.
 
+#[global]
 Instance JDecode__bool : JDecode bool :=
   fun j : json =>
     match j with
@@ -53,6 +59,7 @@ Definition decode__option {T} `{JDecode T} : JDecode (option T) :=
   fun j : json =>
     catch (Some <$> decode j) (const $ inr None).
 
+#[global]
 Instance JDecode__unit : JDecode unit :=
   fun j : json =>
     if j is JSON__Null then inr tt

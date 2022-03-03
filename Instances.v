@@ -8,6 +8,7 @@ Export
   FunNotation.
 Open Scope sexp_scope.
 
+#[global]
 Instance Serialize__json : Serialize json :=
   fix to_sexp (j : json) : sexp :=
     match j with

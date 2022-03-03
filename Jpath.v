@@ -17,6 +17,7 @@ Fixpoint jget (p : jpath) (j : json) : option json :=
   | Jpath__Object p' s => jget p' j >>= get_json' s
   end.
 
+#[global]
 Instance Serialize__jpath : Serialize jpath :=
   let fix jpath_to_list (p : jpath) : list sexp :=
       match p with
@@ -25,6 +26,8 @@ Instance Serialize__jpath : Serialize jpath :=
       | Jpath__Object p s => jpath_to_list p ++ [Atom s]
       end in
   List ∘ jpath_to_list.
+
+Declare Scope json_scope.
 
 Module JpathNotations.
 
