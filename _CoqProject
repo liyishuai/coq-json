@@ -1,5 +1,6 @@
 -Q . JSON
 -arg -w -arg -notation-overridden
+-arg -w -arg -deprecated-syntactic-definition
 JSON.v
 Parser.v
 Lexer.v

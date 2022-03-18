@@ -17,30 +17,35 @@ Definition or_json (j k : json) : json :=
 Module MemberOrder <: TotalLeBool.
 Definition t : Set := string * json.
 
-#[deprecated(since="8.14", note="Use Ascii.compare instead.")]
-Definition ascii_compare (a b : ascii) : comparison :=
+Definition _ascii_compare (a b : ascii) : comparison :=
   N.compare (N_of_ascii a) (N_of_ascii b).
 
-#[deprecated(since="8.14", note="Use Ascii.compare_antisym instead.")]
-Lemma ascii_compare_antisym (a b : ascii) :
+#[deprecated(since="8.14", note="Use Ascii.compare instead.")]
+ Notation ascii_compare := _ascii_compare (only parsing).
+
+Lemma _ascii_compare_antisym (a b : ascii) :
     ascii_compare a b = CompOpp (ascii_compare b a).
 Proof. apply N.compare_antisym. Qed.
 
-#[deprecated(since="8.14", note="Use String.compare instead.")]
-Fixpoint string_compare (s1 s2 : string) : comparison :=
+#[deprecated(since="8.14", note="Use Ascii.compare_antisym instead.")]
+ Notation ascii_compare_antisym := _ascii_compare_antisym (only parsing).
+
+Fixpoint _string_compare (s1 s2 : string) : comparison :=
   match s1, s2 with
   | EmptyString, EmptyString => Eq
   | EmptyString, String _ _  => Lt
   | String _ _ , EmptyString => Gt
   | String c1 s1', String c2 s2' =>
     match ascii_compare c1 c2 with
-    | Eq => string_compare s1' s2'
+    | Eq => _string_compare s1' s2'
     | ne => ne
     end
   end.
 
-#[deprecated(since="8.14", note="Use String.compare_antisym instead.")]
-Lemma string_compare_antisym : forall s1 s2 : string,
+#[deprecated(since="8.14", note="Use String.compare instead.")]
+ Notation string_compare := _string_compare (only parsing).
+
+Lemma _string_compare_antisym : forall s1 s2 : string,
     string_compare s1 s2 = CompOpp (string_compare s2 s1).
 Proof.
   induction s1, s2; intuition.
@@ -49,18 +54,25 @@ Proof.
   destruct (ascii_compare a0 a); simpl; intuition.
 Qed.
 
-#[deprecated(since="8.14", note="Use String.leb instead.")]
-Definition string_leb (s1 s2 : string) : bool :=
+#[deprecated(since="8.14", note="Use String.compare_antisym instead.")]
+ Notation string_compare_antisym := _string_compare_antisym (only parsing).
+
+Definition _string_leb (s1 s2 : string) : bool :=
   if string_compare s1 s2 is Gt then false else true.
 
-#[deprecated(since="8.14", note="Use String.leb_total instead.")]
-Lemma string_leb_total (s1 s2 : string) :
+#[deprecated(since="8.14", note="Use String.leb instead.")]
+ Notation string_leb := _string_leb (only parsing).
+
+Lemma _string_leb_total (s1 s2 : string) :
   string_leb s1 s2 = true \/ string_leb s2 s1 = true.
 Proof.
   unfold string_leb.
   rewrite string_compare_antisym.
   destruct (string_compare s2 s1); intuition.
 Qed.
+
+#[deprecated(since="8.14", note="Use String.leb_total instead.")]
+ Notation string_leb_total := _string_leb_total (only parsing).
 
 Definition leb (x y : t) : bool :=
   string_leb (fst x) (fst y).
