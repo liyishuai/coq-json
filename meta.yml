@@ -31,7 +31,7 @@ categories:
 keywords:
   - name: serialization
   - name: JSON
-date: 2022-03-03
+date: 2022-03-18
 namespace: JSON
 opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
 supported_coq_versions:
