@@ -19,7 +19,7 @@ From JSON to Coq, and vice versa.
 - Author(s):
   - Yishuai Li
 - License: [BSD 3-Clause "New" or "Revised" License](LICENSE)
-- Compatible Coq versions: 8.12 or later
+- Compatible Coq versions: 8.14 or later
 - Additional dependencies:
   - [Parsec](https://github.com/liyishuai/coq-parsec)
   - [Menhir](http://gallium.inria.fr/~fpottier/menhir/)
