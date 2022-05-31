@@ -22,7 +22,8 @@ dependencies:
     opam:
       name: menhir
       version: '{ >= "20220210" }'
-  - description: '[MenhirLib](https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)'
+  - description: "[MenhirLib]\
+                  (https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)"
     opam:
       name: coq-menhirlib
       version: '{ >= "20220210" }'
@@ -31,7 +32,7 @@ categories:
 keywords:
   - name: serialization
   - name: JSON
-date: 2022-03-18
+date: 2022-05-31
 namespace: JSON
 opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
 supported_coq_versions:
