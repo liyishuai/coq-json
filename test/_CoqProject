@@ -1,3 +1,4 @@
 -Q .. JSON
 TestDecode.v
 TestPrint.v
+TestParse.v
