@@ -3,13 +3,13 @@ fullname: Coq JSON
 shortname: coq-json
 opam_name: coq-json
 organization: liyishuai
-circleci: true
+action: true
 ci_test_dependants: true
 synopsis: JSON in Coq
 description: From JSON to Coq, and vice versa.
 authors:
   - name: Yishuai Li
-    email: yishuai@cis.upenn.edu
+    email: liyishuai.lys@alibaba-inc.com
 license:
   - fullname: BSD 3-Clause "New" or "Revised" License
     identifier: BSD-3-Clause
@@ -34,12 +34,17 @@ keywords:
   - name: JSON
 date: 2022-05-31
 namespace: JSON
-opam-file-maintainer: 'Yishuai Li <yishuai@cis.upenn.edu>'
+opam-file-maintainer: 'Yishuai Li <liyishuai.lys@alibaba-inc.com>'
 supported_coq_versions:
   text: 8.14 or later
   opam: '{ >= "8.14~" }'
 tested_coq_opam_versions:
-  - version: '8.14-ocaml-4.12-flambda'
-  - version: '8.15-ocaml-4.12-flambda'
-  - version: 'dev-ocaml-4.12-flambda'
+  - version: '8.14'
+  - version: '8.15'
+  - version: '8.16'
+  - version: 'dev'
 test_target: test
+action_appendix: |2-
+            export: 'OPAMWITHTEST'
+          env:
+            OPAMWITHTEST: true
