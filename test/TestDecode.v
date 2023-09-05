@@ -3,4 +3,5 @@ From JSON Require Import
 
 Definition decode__okey : JDecode (option string) := dpath' decode__option "key".
 
-Compute decode__okey (JSON__Object []).
+Goal decode__okey (JSON__Object []) = inr None.
+Proof. reflexivity. Qed.
