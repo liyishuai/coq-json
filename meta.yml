@@ -18,6 +18,9 @@ dependencies:
     opam:
       name: coq-parsec
       version: '{ >= "0.1.1" }'
+  - description: '[ExtLib](https://coq-community.org/coq-ext-lib)'
+    opam:
+      name: coq-ext-lib
   - description: '[Menhir](http://gallium.inria.fr/~fpottier/menhir/)'
     opam:
       name: menhir
@@ -32,7 +35,6 @@ categories:
 keywords:
   - name: serialization
   - name: JSON
-date: 2022-05-31
 namespace: JSON
 opam-file-maintainer: 'Yishuai Li <liyishuai.lys@alibaba-inc.com>'
 supported_coq_versions:

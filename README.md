@@ -6,8 +6,8 @@ Follow the instructions on https://github.com/coq-community/templates to regener
 
 [![Docker CI][docker-action-shield]][docker-action-link]
 
-[docker-action-shield]: https://github.com/liyishuai/coq-json/workflows/Docker%20CI/badge.svg?branch=master
-[docker-action-link]: https://github.com/liyishuai/coq-json/actions?query=workflow:"Docker%20CI"
+[docker-action-shield]: https://github.com/liyishuai/coq-json/actions/workflows/docker-action.yml/badge.svg?branch=master
+[docker-action-link]: https://github.com/liyishuai/coq-json/actions/workflows/docker-action.yml
 
 
 
@@ -22,6 +22,7 @@ From JSON to Coq, and vice versa.
 - Compatible Coq versions: 8.14 or later
 - Additional dependencies:
   - [Parsec](https://github.com/liyishuai/coq-parsec)
+  - [ExtLib](https://coq-community.org/coq-ext-lib)
   - [Menhir](http://gallium.inria.fr/~fpottier/menhir/)
   - [MenhirLib](https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)
 - Coq namespace: `JSON`

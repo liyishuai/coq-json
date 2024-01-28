@@ -52,7 +52,7 @@ Instance JDecode__bool : JDecode bool :=
 
 Definition decode__list {T} `{JDecode T} : JDecode (list T) :=
   fun j : json =>
-    if j is JSON__Array l then sequence $ map decode l
+    if j is JSON__Array l then @sequence list _ _ _ _ $ map decode l
     else inl $ "Not an Array: " ++ to_string j.
 
 Definition decode__option {T} `{JDecode T} : JDecode (option T) :=
