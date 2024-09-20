@@ -80,3 +80,18 @@ Definition dpath' {T} (d : JDecode T) (s : string) (j : json) : string + T :=
   (decode__jpath (this@s) j <|> inr JSON__Null) >>= d.
 
 Definition dpath {T} `{JDecode T} : string -> JDecode T := dpath' decode.
+
+#[global]
+Instance Monad__JDecode: Monad JDecode :=
+  { ret  _         := const ∘ inr;
+    bind _ _ f k j := f j >>= flip k j
+  }.
+
+#[global]
+Instance MonadExc__JDecode: MonadExc string JDecode :=
+  { raise _       := const ∘ inl;
+    catch _ m f j := match m j with
+                     | inl e       => f e j
+                     | inr _ as mj => mj
+                     end
+  }.
