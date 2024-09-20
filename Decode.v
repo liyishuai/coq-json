@@ -19,6 +19,21 @@ Open Scope json_scope.
 Class JDecode T := decode : json -> string + T.
 
 #[global]
+Instance Monad__JDecode: Monad JDecode :=
+  { ret  _         := const ∘ inr;
+    bind _ _ f k j := f j >>= flip k j
+  }.
+
+#[global]
+Instance MonadExc__JDecode: MonadExc string JDecode :=
+  { raise _       := const ∘ inl;
+    catch _ m f j := match m j with
+                     | inl e       => f e j
+                     | inr _ as mj => mj
+                     end
+  }.
+
+#[global]
 Instance JDecode__json : JDecode json := inr.
 
 #[global]
@@ -35,11 +50,11 @@ Instance JDecode__Z : JDecode Z :=
 
 #[global]
 Instance JDecode__N : JDecode N :=
-  fmap Z.to_N ∘ decode.
+  Z.to_N <$> decode.
 
 #[global]
 Instance JDecode__nat : JDecode nat :=
-  fmap Z.to_nat ∘ decode.
+  Z.to_nat <$> decode.
 
 #[global]
 Instance JDecode__bool : JDecode bool :=
@@ -56,8 +71,7 @@ Definition decode__list {T} `{JDecode T} : JDecode (list T) :=
     else inl $ "Not an Array: " ++ to_string j.
 
 Definition decode__option {T} `{JDecode T} : JDecode (option T) :=
-  fun j : json =>
-    catch (Some <$> decode j) (const $ inr None).
+  catch (Some <$> decode) (const $ pure None).
 
 #[global]
 Instance JDecode__unit : JDecode unit :=
@@ -80,18 +94,3 @@ Definition dpath' {T} (d : JDecode T) (s : string) (j : json) : string + T :=
   (decode__jpath (this@s) j <|> inr JSON__Null) >>= d.
 
 Definition dpath {T} `{JDecode T} : string -> JDecode T := dpath' decode.
-
-#[global]
-Instance Monad__JDecode: Monad JDecode :=
-  { ret  _         := const ∘ inr;
-    bind _ _ f k j := f j >>= flip k j
-  }.
-
-#[global]
-Instance MonadExc__JDecode: MonadExc string JDecode :=
-  { raise _       := const ∘ inl;
-    catch _ m f j := match m j with
-                     | inl e       => f e j
-                     | inr _ as mj => mj
-                     end
-  }.
