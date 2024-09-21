@@ -55,16 +55,37 @@ Definition lex__token : parser token :=
 
 CoFixpoint TheEnd : buffer := Buf_cons (EOF tt) TheEnd.
 
-Definition lexer (str : string) : option string + buffer :=
-  match Parser.parse (many lex__token) str with
-  | inl err => inl err
-  | inr (l, _) => inr (app_buf l TheEnd)
+Open Scope buffer_scope.
+CoFixpoint push_back (b: buffer) (l: list token) : buffer :=
+  match b with
+  | EOF _ :: _    => l ++ TheEnd
+  | head  :: tail => head :: push_back tail l
   end.
 
-Definition from_string (str : string) : option string + json :=
-  match lexer str with
-  | inl err => inl err
-  | inr b => if parse_json bigNumber b is Parsed_pr j _
-            then inr j
-            else inl (Some "Passed lexer but failed JSON parser")
+Definition lexer' (acc: buffer * list ascii) (str: string)
+  : string + buffer * list ascii :=
+  let (buf, lchar) := acc in
+  match parse' (many lex__token) lchar str with
+  | inl (Some err)     => inl err
+  | inl None           => inr acc
+  | inr (l, remainder) => inr (push_back buf l, remainder)
+  end.
+
+Definition from_string' (acc: buffer * list ascii) (str: string)
+  : string + option json * buffer * list ascii :=
+  match lexer' acc str with
+  | inl e => inl e
+  | inr (b, remainder) =>
+      match parse_json bigNumber b with
+      | Parsed_pr    j b'      => inr (Some j, b', remainder)
+      | Fail_pr_full _ (EOF _) => inr (None  , b , remainder)
+      | _ => inl "Passed lexer but failed JSON parser"
+      end
+  end.
+
+Definition from_string (str: string) : option string + json :=
+  match from_string' (TheEnd, []) str with
+  | inl e              => inl (Some e)
+  | inr (None  , _, _) => inl None
+  | inr (Some j, _, _) => inr j
   end.
