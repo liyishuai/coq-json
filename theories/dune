@@ -1,0 +1,11 @@
+(coq.theory
+ (name JSON)
+ (package coq-json)
+ (synopsis "JSON in Coq")
+ (flags -w -deprecated-syntactic-definition))
+
+(rule
+ (target Parser.v)
+ (deps Parser.vy)
+ (action
+  (run menhir --coq %{deps})))

@@ -1,0 +1,20 @@
+(alias
+ (name runtest)
+ (deps
+  (package coq-json)
+  (alias_rec all)))
+
+(rule
+ (alias runtest)
+ (action
+  (run coqc %{dep:TestDecode.v})))
+
+(rule
+ (alias runtest)
+ (action
+  (run coqc %{dep:TestParse.v})))
+
+(rule
+ (alias runtest)
+ (action
+  (run coqc %{dep:TestPrint.v})))

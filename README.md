@@ -22,9 +22,9 @@ From JSON to Coq, and vice versa.
 - Compatible Coq versions: 8.14 or later
 - Additional dependencies:
   - [Parsec](https://github.com/liyishuai/coq-parsec)
-  - [ExtLib](https://coq-community.org/coq-ext-lib)
   - [Menhir](http://gallium.inria.fr/~fpottier/menhir/)
   - [MenhirLib](https://gitlab.inria.fr/fpottier/menhir/-/tree/master/coq-menhirlib/)
+  - [Dune](https://dune.build) 3.6 or later
 - Coq namespace: `JSON`
 - Related publication(s): none
 
@@ -43,8 +43,8 @@ To instead build and install manually, do:
 ``` shell
 git clone https://github.com/liyishuai/coq-json.git
 cd coq-json
-make   # or make -j <number-of-cores-on-your-machine> 
-make install
+dune build
+dune install
 ```
 
 

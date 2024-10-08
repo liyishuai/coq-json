@@ -14,13 +14,11 @@ synopsis: "JSON in Coq"
 description: """
 From JSON to Coq, and vice versa."""
 
-build: [make "-j%{jobs}%"]
-run-test: [make "-j%{jobs}%" "test"]
-install: [make "install"]
+build: ["dune" "build" "-p" name "-j" jobs]
 depends: [
+  "dune" {>= "3.6"}
   "coq" { >= "8.14~" }
-  "coq-parsec" { >= "0.1.1" }
-  "coq-ext-lib" 
+  "coq-parsec" { >= "0.2.0" }
   "menhir" { >= "20220210" }
   "coq-menhirlib" { >= "20220210" }
 ]

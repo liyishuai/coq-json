@@ -1,24 +1,17 @@
-COQMAKEFILE ?= Makefile.coq
-MENHIR      ?= menhir
-MENHIRFLAGS ?= --coq
+TEMPLATES ?= ../templates
+TARGETS = .github/workflows/docker-action.yml coq-json.opam dune-project README.md
 
-ifneq ($(MAKECMDGOALS),clean)
-	-include $(COQMAKEFILE)
-endif
+all:
+	dune build
 
-$(COQMAKEFILE): _CoqProject
-	$(COQBIN)coq_makefile -f $^ -o $@
+test: all
+	dune test
 
-.PHONY: clean test
-clean::
-	@ rm -f `cat .gitignore`
-
-Parser.v: Parser.vy
-	$(MENHIR) $(MENHIRFLAGS) $<
-
-test:
-	$(MAKE) -C test
+meta:
+	$(TEMPLATES)/generate.sh $(TARGETS)
 
 publish%:
 	opam publish --packages-directory=released/packages \
 		--repo=coq/opam --tag=v$* -v $* liyishuai/coq-json
+
+.PHONY: all test meta publish

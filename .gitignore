@@ -34,3 +34,4 @@ nra.cache
 Parser.v
 Makefile.coq*
 *~
+_build/
