@@ -8,4 +8,4 @@
  (target Parser.v)
  (deps Parser.vy)
  (action
-  (run menhir --coq %{deps})))
+  (run menhir --coq --coq-no-version-check %{deps})))
