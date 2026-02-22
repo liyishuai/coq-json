@@ -9,7 +9,7 @@ synopsis: JSON in Coq
 description: From JSON to Coq, and vice versa.
 authors:
   - name: Yishuai Li
-    email: liyishuai.lys@alibaba-inc.com
+    email: yishuai.li@pingcap.com
 license:
   - fullname: BSD 3-Clause "New" or "Revised" License
     identifier: BSD-3-Clause
@@ -33,7 +33,7 @@ keywords:
   - name: serialization
   - name: JSON
 namespace: JSON
-opam-file-maintainer: 'Yishuai Li <liyishuai.lys@alibaba-inc.com>'
+opam-file-maintainer: 'Yishuai Li <yishuai.li@pingcap.com>'
 supported_coq_versions:
   text: 8.14 or later
   opam: '{ >= "8.14~" }'
@@ -45,6 +45,9 @@ tested_coq_opam_versions:
   - version: '8.18'
   - version: '8.19'
   - version: '8.20'
+tested_rocq_opam_versions:
+  - version: '9.0'
+  - version: '9.1'
   - version: 'dev'
 dune: true
 action_appendix: |2-
